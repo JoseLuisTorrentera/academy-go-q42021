@@ -22,9 +22,13 @@ func GetAllSpells() ([]*models.Spell, error) {
 
 	spells := []*models.Spell{}
 	for _, line := range csvLines {
-		id, _ := strconv.Atoi(line[0])
+		id, err := strconv.Atoi(line[0])
+		if err != nil {
+			return nil, err
+		}
+
 		spell := models.Spell{
-			Id:      id,
+			ID:      id,
 			Name:    line[1],
 			Classes: line[2],
 			Level:   line[3],
@@ -48,10 +52,14 @@ func GetSpellById(spell_id int) (*models.Spell, error) {
 	}
 
 	for _, line := range csvLines {
-		id, _ := strconv.Atoi(line[0])
+		id, err := strconv.Atoi(line[0])
+		if err != nil {
+			return nil, err
+		}
+
 		if spell_id == id {
 			spell := models.Spell{
-				Id:      id,
+				ID:      id,
 				Name:    line[1],
 				Classes: line[2],
 				Level:   line[3],

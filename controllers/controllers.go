@@ -7,9 +7,11 @@ import (
 	"strconv"
 
 	"github.com/JoseLuisTorrentera/academy-go-q42021/repository"
+
 	"github.com/gorilla/mux"
 )
 
+// GetAllSpells - Get all spells from csv
 func GetAllSpells(w http.ResponseWriter, r *http.Request) {
 	spells, err := repository.GetAllSpells()
 	if err != nil {
@@ -18,6 +20,7 @@ func GetAllSpells(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(spells)
 }
 
+// GetSpellsById - Get spell by a given id
 func GetSpellsById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
