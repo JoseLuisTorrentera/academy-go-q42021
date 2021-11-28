@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/JoseLuisTorrentera/academy-go-q42021/repository"
+	"github.com/JoseLuisTorrentera/academy-go-q42021/services"
 
 	"github.com/gorilla/mux"
 )
@@ -20,15 +20,12 @@ func GetAllSpells(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(spells)
 }
 
-// GetSpellsById - Get spell by a given id
-func GetSpellsById(w http.ResponseWriter, r *http.Request) {
+// GetSpellsByName - Get spell by a given name
+func GetSpellByName(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		log.Fatal(err)
-	}
+	name := vars["name"]
 
-	spell, err := repository.GetSpellById(id)
+	spell, err := services.GetSpellByName(name)
 	if err != nil {
 		log.Fatal(err)
 	}

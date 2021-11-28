@@ -2,7 +2,6 @@ package repository
 
 import (
 	"encoding/csv"
-	"errors"
 	"os"
 	"strconv"
 
@@ -27,47 +26,20 @@ func GetAllSpells() ([]*models.Spell, error) {
 			return nil, err
 		}
 
+		level, err := strconv.Atoi(line[3])
+		if err != nil {
+			return nil, err
+		}
+
 		spell := models.Spell{
 			ID:      id,
 			Name:    line[1],
 			Classes: line[2],
-			Level:   line[3],
+			Level:   level,
 			School:  line[4],
 		}
 		spells = append(spells, &spell)
 	}
 
 	return spells, nil
-}
-
-func GetSpellById(spell_id int) (*models.Spell, error) {
-	csvFile, err := os.Open("./commons/dnd-spells.csv")
-	if err != nil {
-		return nil, err
-	}
-
-	csvLines, err := csv.NewReader(csvFile).ReadAll()
-	if err != nil {
-		return nil, err
-	}
-
-	for _, line := range csvLines {
-		id, err := strconv.Atoi(line[0])
-		if err != nil {
-			return nil, err
-		}
-
-		if spell_id == id {
-			spell := models.Spell{
-				ID:      id,
-				Name:    line[1],
-				Classes: line[2],
-				Level:   line[3],
-				School:  line[4],
-			}
-			return &spell, nil
-		}
-	}
-
-	return nil, errors.New("Spell not founded!")
 }

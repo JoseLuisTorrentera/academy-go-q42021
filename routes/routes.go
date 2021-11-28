@@ -10,6 +10,6 @@ func NewRouter() *mux.Router {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/spells", controllers.GetAllSpells)
-	r.HandleFunc("/spells/{id}", controllers.GetSpellsById)
+	r.HandleFunc("/spells/{name}", controllers.GetSpellByName)
 	return r
 }
