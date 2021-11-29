@@ -1,15 +1,20 @@
 package routes
 
 import (
-	"github.com/JoseLuisTorrentera/academy-go-q42021/controllers"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
-func NewRouter() *mux.Router {
+type controller interface {
+	GetAllSpells(w http.ResponseWriter, r *http.Request)
+	GetSpellByName(w http.ResponseWriter, r *http.Request)
+}
+
+func NewRouter(c controller) *mux.Router {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/spells", controllers.GetAllSpells)
-	r.HandleFunc("/spells/{name}", controllers.GetSpellByName)
+	r.HandleFunc("/spells", c.GetAllSpells)
+	r.HandleFunc("/spells/{name}", c.GetSpellByName)
 	return r
 }

@@ -6,13 +6,30 @@ import (
 	"github.com/JoseLuisTorrentera/academy-go-q42021/utils"
 )
 
-func GetSpell(name string) (*models.Spell, error) {
-	spell, err := services.GetSpellByName(name)
+type getSpell interface {
+	GetSpellByName(name string) (*models.Spell, error)
+}
+
+type updateCSV interface {
+	UpdateSpellsCSV(file string, spell *models.Spell) error
+}
+
+type UcGetSpell struct {
+	service   getSpell
+	updateCSV updateCSV
+}
+
+func NewUCGetSpell(s services.SpellApiService, up utils.UpdateCSV) UcGetSpell {
+	return UcGetSpell{service: s, updateCSV: up}
+}
+
+func (uc UcGetSpell) GetSpell(name string) (*models.Spell, error) {
+	spell, err := uc.service.GetSpellByName(name)
 	if err != nil {
 		return nil, err
 	}
 
-	err = utils.UpdateSpellsCSV("./commons/dnd-spells.csv", spell)
+	err = uc.updateCSV.UpdateSpellsCSV("./commons/dnd-spells.csv", spell)
 	if err != nil {
 		return nil, err
 	}

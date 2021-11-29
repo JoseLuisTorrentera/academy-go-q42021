@@ -14,6 +14,13 @@ import (
 	"github.com/JoseLuisTorrentera/academy-go-q42021/models"
 )
 
+type SpellApiService struct {
+}
+
+func NewSpellApiService() SpellApiService {
+	return SpellApiService{}
+}
+
 type Response struct {
 	Name    string  `json:"name"`
 	Level   int     `json:"level"`
@@ -29,7 +36,7 @@ type Class struct {
 	Name string `json:"name"`
 }
 
-func GetSpellByName(name string) (*models.Spell, error) {
+func (ss SpellApiService) GetSpellByName(name string) (*models.Spell, error) {
 
 	name = strings.ToLower(name)
 	url := fmt.Sprintf("https://www.dnd5eapi.co/api/spells/%s", name)
@@ -55,7 +62,7 @@ func GetSpellByName(name string) (*models.Spell, error) {
 		classes += (class.Name + ",")
 	}
 
-	newId, err := GenerateSpellIndex()
+	newId, err := ss.GenerateSpellIndex()
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +78,7 @@ func GetSpellByName(name string) (*models.Spell, error) {
 	return &spell, nil
 }
 
-func GenerateSpellIndex() (int, error) {
+func (ss SpellApiService) GenerateSpellIndex() (int, error) {
 	csvFile, err := os.Open("./commons/dnd-spells.csv")
 	defer csvFile.Close()
 	if err != nil {

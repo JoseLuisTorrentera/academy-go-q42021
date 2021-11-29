@@ -8,8 +8,15 @@ import (
 	"github.com/JoseLuisTorrentera/academy-go-q42021/models"
 )
 
-func UpdateSpellsCSV(file string, spell *models.Spell) error {
-	csvFile, err := os.OpenFile("./commons/dnd-spells.csv", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+type UpdateCSV struct {
+}
+
+func NewUpdateCSV() UpdateCSV {
+	return UpdateCSV{}
+}
+
+func (upcsv UpdateCSV) UpdateSpellsCSV(file string, spell *models.Spell) error {
+	csvFile, err := os.OpenFile(file, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	defer csvFile.Close()
 	if err != nil {
 		return err

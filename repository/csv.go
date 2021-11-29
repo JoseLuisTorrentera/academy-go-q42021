@@ -8,7 +8,14 @@ import (
 	"github.com/JoseLuisTorrentera/academy-go-q42021/models"
 )
 
-func GetAllSpells() ([]*models.Spell, error) {
+type SpellRepo struct {
+}
+
+func NewSpellRepo() SpellRepo {
+	return SpellRepo{}
+}
+
+func (sr SpellRepo) GetAllSpells() ([]*models.Spell, error) {
 	csvFile, err := os.Open("./commons/dnd-spells.csv")
 	defer csvFile.Close()
 	if err != nil {
