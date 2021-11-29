@@ -13,11 +13,9 @@ import (
 )
 
 func main() {
-	repo := repository.NewSpellRepo()
-	servApi := services.NewSpellApiService()
-	updateCSV := utils.NewUpdateCSV()
-	ucGetSpells := usecases.NewUCGetSpells(repo)
-	ucGetSpell := usecases.NewUCGetSpell(servApi, updateCSV)
+
+	ucGetSpells := usecases.NewUCGetSpells(repository.NewSpellRepo())
+	ucGetSpell := usecases.NewUCGetSpell(services.NewSpellApiService(), utils.NewUpdateCSV())
 	c := controllers.NewController(ucGetSpells, ucGetSpell)
 	r := routes.NewRouter(c)
 	log.Fatal(http.ListenAndServe(":10000", r))
