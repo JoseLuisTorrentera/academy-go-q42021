@@ -5,15 +5,14 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/JoseLuisTorrentera/academy-go-q42021/repository"
-	"github.com/JoseLuisTorrentera/academy-go-q42021/services"
+	"github.com/JoseLuisTorrentera/academy-go-q42021/usecases"
 
 	"github.com/gorilla/mux"
 )
 
 // GetAllSpells - Get all spells from csv
 func GetAllSpells(w http.ResponseWriter, r *http.Request) {
-	spells, err := repository.GetAllSpells()
+	spells, err := usecases.GetAllSpells()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +24,7 @@ func GetSpellByName(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	name := vars["name"]
 
-	spell, err := services.GetSpellByName(name)
+	spell, err := usecases.GetSpell(name)
 	if err != nil {
 		log.Fatal(err)
 	}

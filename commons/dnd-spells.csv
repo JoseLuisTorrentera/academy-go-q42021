@@ -7,3 +7,7 @@
 7,Dancing Lights,"Artificer, Bard, Sorcerer, Wizard",0,Evocation
 8,Decompose (HB),"Cleric",0,Necromancy
 9,Druidcraft,"Druid",0,Transmutation
+10,Haste,"Sorcerer,Wizard,",3,Transmutation
+11,Fireball,"Sorcerer,Wizard,",3,Evocation
+12,Counterspell,"Sorcerer,Warlock,Wizard,",3,Abjuration
+13,Dream,"Bard,Warlock,Wizard,",5,Illusion

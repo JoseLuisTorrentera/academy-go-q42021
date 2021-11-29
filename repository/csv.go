@@ -10,6 +10,7 @@ import (
 
 func GetAllSpells() ([]*models.Spell, error) {
 	csvFile, err := os.Open("./commons/dnd-spells.csv")
+	defer csvFile.Close()
 	if err != nil {
 		return nil, err
 	}

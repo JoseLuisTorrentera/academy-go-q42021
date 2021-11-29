@@ -3,6 +3,7 @@ package services
 import (
 	"encoding/csv"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -33,6 +34,9 @@ func GetSpellByName(name string) (*models.Spell, error) {
 	name = strings.ToLower(name)
 	url := fmt.Sprintf("https://www.dnd5eapi.co/api/spells/%s", name)
 	response, err := http.Get(url)
+	if response.StatusCode != http.StatusOK {
+		return nil, errors.New("Spell not founded!")
+	}
 
 	if err != nil {
 		return nil, err
@@ -69,6 +73,7 @@ func GetSpellByName(name string) (*models.Spell, error) {
 
 func GenerateSpellIndex() (int, error) {
 	csvFile, err := os.Open("./commons/dnd-spells.csv")
+	defer csvFile.Close()
 	if err != nil {
 		return 0, err
 	}
@@ -84,5 +89,6 @@ func GenerateSpellIndex() (int, error) {
 		return 0, err
 	}
 
+	csvFile.Close()
 	return newId + 1, nil
 }
