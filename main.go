@@ -14,8 +14,8 @@ import (
 
 func main() {
 
-	ucGetSpells := usecases.NewUCGetSpells(repository.NewSpellRepo())
-	ucGetSpell := usecases.NewUCGetSpell(services.NewSpellApiService(), utils.NewUpdateCSV())
+	ucGetSpells := usecases.NewUCGetSpells(repository.NewSpellRepo("./commons/dnd-spells.csv"))
+	ucGetSpell := usecases.NewUCGetSpell(services.NewSpellApiService("./commons/dnd-spells.csv"), utils.NewUpdateCSV())
 	c := controllers.NewController(ucGetSpells, ucGetSpell)
 	r := routes.NewRouter(c)
 	log.Fatal(http.ListenAndServe(":10000", r))

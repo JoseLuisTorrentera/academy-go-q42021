@@ -2,8 +2,6 @@ package usecases
 
 import (
 	"github.com/JoseLuisTorrentera/academy-go-q42021/models"
-	"github.com/JoseLuisTorrentera/academy-go-q42021/services"
-	"github.com/JoseLuisTorrentera/academy-go-q42021/utils"
 )
 
 type getSpell interface {
@@ -19,7 +17,7 @@ type UcGetSpell struct {
 	updateCSV updateCSV
 }
 
-func NewUCGetSpell(s services.SpellApiService, up utils.UpdateCSV) UcGetSpell {
+func NewUCGetSpell(s getSpell, up updateCSV) UcGetSpell {
 	return UcGetSpell{service: s, updateCSV: up}
 }
 

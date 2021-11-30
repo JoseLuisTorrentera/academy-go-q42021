@@ -9,14 +9,15 @@ import (
 )
 
 type SpellRepo struct {
+	file string
 }
 
-func NewSpellRepo() SpellRepo {
-	return SpellRepo{}
+func NewSpellRepo(file string) SpellRepo {
+	return SpellRepo{file: file}
 }
 
-func (sr SpellRepo) GetAllSpells() ([]*models.Spell, error) {
-	csvFile, err := os.Open("./commons/dnd-spells.csv")
+func (sr SpellRepo) GetSpellsFromCsv() ([]*models.Spell, error) {
+	csvFile, err := os.Open(sr.file)
 	defer csvFile.Close()
 	if err != nil {
 		return nil, err

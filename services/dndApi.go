@@ -5,20 +5,22 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/JoseLuisTorrentera/academy-go-q42021/models"
+	"github.com/go-resty/resty/v2"
 )
 
 type SpellApiService struct {
+	file   string
+	Client *resty.Client
 }
 
-func NewSpellApiService() SpellApiService {
-	return SpellApiService{}
+func NewSpellApiService(file string) SpellApiService {
+	return SpellApiService{file: file, Client: resty.New()}
 }
 
 type Response struct {
@@ -37,11 +39,11 @@ type Class struct {
 }
 
 func (ss SpellApiService) GetSpellByName(name string) (*models.Spell, error) {
-
 	name = strings.ToLower(name)
 	url := fmt.Sprintf("https://www.dnd5eapi.co/api/spells/%s", name)
-	response, err := http.Get(url)
-	if response.StatusCode != http.StatusOK {
+	response, err := ss.Client.R().Get(url)
+
+	if response.StatusCode() != http.StatusOK {
 		return nil, errors.New("Spell not founded!")
 	}
 
@@ -49,13 +51,8 @@ func (ss SpellApiService) GetSpellByName(name string) (*models.Spell, error) {
 		return nil, err
 	}
 
-	responseData, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return nil, err
-	}
-
 	var responseObject Response
-	json.Unmarshal(responseData, &responseObject)
+	json.Unmarshal(response.Body(), &responseObject)
 
 	classes := ""
 	for _, class := range responseObject.Classes {
@@ -79,7 +76,7 @@ func (ss SpellApiService) GetSpellByName(name string) (*models.Spell, error) {
 }
 
 func (ss SpellApiService) GenerateSpellIndex() (int, error) {
-	csvFile, err := os.Open("./commons/dnd-spells.csv")
+	csvFile, err := os.Open(ss.file)
 	defer csvFile.Close()
 	if err != nil {
 		return 0, err
