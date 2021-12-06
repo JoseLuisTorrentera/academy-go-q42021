@@ -1,0 +1,13 @@
+1,Acid Splash,"Artificer, Sorcerer, Wizard",0,Conjuration
+2,Blade Ward,"Bard, Sorcerer, Warlock, Wizard",0,Abjuration
+3,Booming Blade,"Artificer, Sorcerer, Warlock, Wizard",0,Evocation
+4,Chill Touch,"Sorcerer, Warlock, Wizard",0,Necromancy
+5,Control Flames,"Druid, Sorcerer, Wizard",0,Transmutation
+6,Create Bonfire,"Druid, Sorcerer, Warlock, Wizard",0,Conjuration
+7,Dancing Lights,"Artificer, Bard, Sorcerer, Wizard",0,Evocation
+8,Decompose (HB),"Cleric",0,Necromancy
+9,Druidcraft,"Druid",0,Transmutation
+10,Haste,"Sorcerer,Wizard,",3,Transmutation
+11,Fireball,"Sorcerer,Wizard,",3,Evocation
+12,Counterspell,"Sorcerer,Warlock,Wizard,",3,Abjuration
+13,Dream,"Bard,Warlock,Wizard,",5,Illusion
